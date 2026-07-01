@@ -4,25 +4,24 @@
 // ─────────────────────────────────────────────────────────────
 // Trip data
 // ─────────────────────────────────────────────────────────────
-const TRIP_NAME = "Nepo Vibezz";
+const TRIP_NAME = "Ojoro BnB";
 const TRIP_TAG  = "Tremblant Takeover · Summer '26";
 const TRIP_START = new Date('2026-07-02T18:00:00-04:00');
 const TRIP_END   = new Date('2026-07-05T18:00:00-04:00');
 
 const CHALET = {
   title: "Living in the nature 10 min from Tremblant",
-  area: "Les Laurentides, Quebec · Canada",
-  host: "Arnaud (Superhost)",
-  cohost: "Lucia",
+  area: "65 Mont-Sanford, La Conception, Québec, J0T 1M0",
+  host: "Drummond Boyz",
   rating: "4.87",
   reviews: 85,
-  brs: 7, beds: 9, baths: 3.5, max: 14,
+  brs: 7, beds: 11, baths: 3.5, max: 18,
   reg: "315287",
   airbnb: "https://www.airbnb.ca/rooms/744323772462893119",
   perks: ["Hot tub (year-round)", "Ping pong + games room", "Garden + mountain view", "Self check-in · smart lock", "WiFi"],
 };
 
-const ROSTER = ["Nike","Kerry","Chimdi","Bolu","Marie","Ella","Hadidja","Godswill","Rose","Hafeezah","Sheilla","Toni","Saralie","Moeira","HK","Arinala","Sultan"];
+const ROSTER = ["Nike","Kerry","Chimdi","Bolu","Marie","Ella","Hadidja","Godswill","Rose","Hafeezah","Sheilla","Toni","Frances","Laurianne","Winnie","Titun","Sultan","Tanou"];
 
 const BIRTHDAYS = [
   { name: "Hadidja", day: "Thu · Jul 2", note: "kicking off the trip with cake 🎂" },
@@ -31,49 +30,55 @@ const BIRTHDAYS = [
 
 const ROOMS = [
   { floor: 1, n: 1, bed: "Queen Bed",            ppl: ["Ella","Sheilla"] },
-  { floor: 1, n: 2, bed: "2 Single Beds",        ppl: ["Nike","Chimdi"] },
-  { floor: 1, n: 3, bed: "King + Air Mattress",  ppl: ["Marie","Hadidja","Hafeezah","Arinala"] },
+  { floor: 1, n: 2, bed: "2 Single Beds",        ppl: ["Nike","Chimdi","Tanou"] },
+  { floor: 1, n: 3, bed: "King + Air Mattress",  ppl: ["Marie","Hadidja","Titun","Hafeezah"] },
   { floor: 1, n: 4, bed: "Queen Bed",            ppl: ["Kerry","Rose"] },
-  { floor: 2, n: 5, bed: "Queen Bed",            ppl: ["Saralie","Moeira","HK"] },
+  { floor: 2, n: 5, bed: "Queen Bed",            ppl: ["Laurianne","Winnie","Frances"] },
   { floor: 2, n: 6, bed: "2 Single Beds",        ppl: ["Bolu","Sultan"] },
   { floor: 2, n: 7, bed: "2 Single Beds",        ppl: ["Godswill","Toni"] },
+];
+
+const CARS = [
+  { driver: "Ella",      time: "4:30 – 5:00 PM", stop: "Costco (Laval)",  to: "Chalet", ppl: ["Ella","Nike","Sheilla","Marie"],            meet: "Meeting at Costco Laval" },
+  { driver: "Rose",      time: "5:00 – 5:30 PM", stop: "SAQ",             to: "Chalet", ppl: ["Rose","Hadidja","Hafeezah","Titun"],         meet: "Meeting at Hadidja's" },
+  { driver: "Kerry",     time: "TBD",            stop: "Cake pickup",     to: "Chalet", ppl: ["Kerry","Chimdi","Tanou","Frances"],          meet: "Meeting at Papineau" },
+  { driver: "Laurianne", time: "4:30 – 5:00 PM", stop: "Costco",          to: "Chalet", ppl: ["Laurianne","Bolu","Winnie"],                 meet: "Pick up" },
+  { driver: "Sultan",    time: "6:30 – 7:00 PM", stop: "Straight there",  to: "Chalet", ppl: ["Sultan","Godswill","Toni"],                  meet: "Pick up at Papineau" },
 ];
 
 const DAYS = [
   {
     id: "d1", label: "Day 1", date: "Thursday, July 2", short: "Thu",
     dateISO: "2026-07-02",
-    theme: "Arrival & Settle In", badge: "🚗 the long drive up",
+    theme: "Arrival & Settle In", badge: "🚗 road trip + settle in",
     program: [
-      { time: "all day",  title: "Hadidja's birthday 🎂", kind: "birthday" },
-      { time: "10:00 AM", title: "Hit the road — Montréal → Tremblant", kind: "drive" },
-      { time: "12:30 PM", title: "Grocery stop", kind: "errand" },
-      { time: "6 – 8 PM", title: "Arrive at the chalet", kind: "milestone" },
-      { time: "8:30 PM",  title: "First group dinner", kind: "meal" },
-      { time: "10:00 PM", title: "Hot tub + bonfire", kind: "activity" },
-      { time: "late",     title: "🎂 Hadidja's birthday cake", kind: "birthday" },
+      { time: "all day",   title: "Hadidja's birthday 🎂", kind: "birthday" },
+      { time: "4:30 – 7 PM", title: "Cars depart Montréal — Costco, SAQ, cake pickup, Papineau", kind: "drive" },
+      { time: "4 – 10 PM", title: "Arrive at the chalet (check-in after 4pm)", kind: "milestone" },
+      { time: "Evening",   title: "Group dinner — everyone pitches in", kind: "meal" },
+      { time: "Evening",   title: "🎂 Hadidja's birthday celebration", kind: "birthday" },
+      { time: "Late",      title: "Game night + Love Island watch party", kind: "activity" },
     ],
     blocks: [
-      { time: "Morning", emoji: "☀️", items: [
-        "Make sure everyone is packed",
-        "Confirm driver(s) for each car",
-        "Departure time locked in (TBD)",
-        "Grocery stop on the way",
+      { time: "Departure", emoji: "☀️", items: [
+        "Confirm everyone is ready & packed",
+        "Designated driver(s) confirmed for each of the 5 cars",
+        "Departure times locked in — Ella & Laurianne 4:30–5pm, Rose 5–5:30pm, Sultan 6:30–7pm, Kerry TBD (see Cars list)",
+        "Grocery stop on the way (Costco / SAQ / cake pickup)",
         "Road-trip playlist queued 🎶",
       ]},
-      { time: "Afternoon", emoji: "🚙", items: [
-        "Arrive at the chalet between 6 — 8pm",
-        "Get the door code from the host (sent 24h before)",
-        "House tour · claim your room (see Rooms tab)",
-        "Unload groceries + supplies",
-        "Set up speaker, drinks, snacks",
+      { time: "Arrival at Chalet", emoji: "📍", items: [
+        "Arrive at chalet — estimated between 4 and 10pm",
+        "Check-in & collect keys from host (Nike holds the key)",
+        "House tour — rooms already assigned (see Rooms tab)",
+        "Unload groceries & supplies",
+        "Set up the common areas (speaker, drinks, snacks)",
       ]},
-      { time: "Evening", emoji: "🔥", items: [
-        "Cook the first group dinner together",
-        "Drinks & vibe out on the deck",
-        "Hot tub session 🛁",
-        "Bonfire / outdoor hang if weather plays",
-        "🎂 Hadidja's birthday — go OFF",
+      { time: "First Night", emoji: "🔥", items: [
+        "Group dinner — cook together",
+        "Drinks & get settled in",
+        "🎂 Hadidja's birthday celebration",
+        "Game night and watch Love Island",
       ]},
     ],
   },
@@ -82,31 +87,37 @@ const DAYS = [
     dateISO: "2026-07-03",
     theme: "Full Send Day", badge: "🎉 the main event",
     program: [
-      { time: "9:00 AM",  title: "Coffee + slow breakfast on the deck", kind: "meal" },
-      { time: "11:00 AM", title: "Morning hike — Mont-Tremblant trails", kind: "activity" },
-      { time: "1:00 PM",  title: "BBQ lunch at the chalet", kind: "meal" },
-      { time: "3:00 PM",  title: "Lake day — swim + paddle", kind: "activity" },
-      { time: "7:30 PM",  title: "Group BBQ dinner", kind: "meal" },
-      { time: "9:30 PM",  title: "Games night + beer pong bracket", kind: "activity" },
-      { time: "11:00 PM", title: "Bonfire + music", kind: "activity" },
+      { time: "9:00 AM",  title: "Wake up + simple breakfast (coffee, tea, fruit, snacks)", kind: "meal" },
+      { time: "Morning",  title: "Workout — run, table tennis, group workouts", kind: "activity" },
+      { time: "Morning",  title: "Ojoro sports shoot 📸 — sports attire required", kind: "activity" },
+      { time: "Afternoon", title: "Brunch crew cooks, everyone else gets ready", kind: "meal" },
+      { time: "Afternoon", title: "Free time / chill — do whatever", kind: "activity" },
+      { time: "3:00 PM",  title: "Short film auditioning starts", kind: "milestone" },
+      { time: "5:00 PM",  title: "Dinner crew starts cooking", kind: "meal" },
+      { time: "Evening",  title: "Group dinner", kind: "meal" },
+      { time: "Evening",  title: "Love Island watch party", kind: "activity" },
+      { time: "Night",    title: "Music / chill / hot tub", kind: "activity" },
     ],
     blocks: [
-      { time: "Morning", emoji: "☕", items: [
-        "Coffee & chill on the deck",
-        "Slow breakfast in shifts",
-        "Morning activity — hike, kayak, explore the area",
+      { time: "Morning", emoji: "☀️", items: [
+        "Wake up at 9am",
+        "Brunch crew (Nike, Ella, Marie, Sultan) makes coffee, tea, fruit & snacks",
+        "Morning activity — go on a run, table tennis, group workouts etc.",
+        "Ojoro sports shoot — bring sports attire (top end quality stuff)",
       ]},
       { time: "Afternoon", emoji: "🌞", items: [
-        "Drive 10 min to Mont-Tremblant village",
-        "Big group activity — swim, lake, trails, gondola",
-        "BBQ or packed lunch outside",
-        "Free time to relax at the chalet",
+        "Lunch/grill crew (Frances, Chimdi, Tanou, Winnie) activates, everyone else gets ready",
+        "We all eat",
+        "Lunch/grill crew gets ready for the rest of the day",
+        "Free time — chill for a bit, people do whatever",
+        "Short film auditioning starts at 3PM",
       ]},
       { time: "Evening", emoji: "🎵", items: [
-        "Group BBQ dinner",
-        "Games night — Uno, cards, beer pong, ping pong",
-        "Bonfire + music",
-        "Vibes until late 🌙",
+        "Dinner crew (Rose, Hadidja, Hafeezah, Kerry, Sheilla) starts getting food ready at 5PM",
+        "Everyone else starts getting ready for the night",
+        "We all eat",
+        "Love Island watch party",
+        "Music / chill / hot tub",
       ]},
     ],
   },
@@ -115,71 +126,78 @@ const DAYS = [
     dateISO: "2026-07-04",
     theme: "Adventure & Relax", badge: "🌿 last full day — make it count",
     program: [
-      { time: "10:30 AM", title: "Group brunch", kind: "meal" },
-      { time: "12:30 PM", title: "Big group activity — zipline / ATVs", kind: "activity" },
-      { time: "4:00 PM",  title: "Free time + hot tub", kind: "activity" },
-      { time: "7:00 PM",  title: "Final group dinner — go all out", kind: "meal" },
-      { time: "9:00 PM",  title: "Trip highlight reel + recap", kind: "milestone" },
-      { time: "10:30 PM", title: "Last bonfire & celebration", kind: "activity" },
+      { time: "9:00 AM",  title: "Wake up + simple breakfast (coffee, tea, fruit, snacks)", kind: "meal" },
+      { time: "Morning",  title: "Workout — run, table tennis, group workouts", kind: "activity" },
+      { time: "Brunch",   title: "Group brunch", kind: "meal" },
+      { time: "Afternoon", title: "BBQ/lunch crew cooks, everyone else gets ready", kind: "meal" },
+      { time: "Afternoon", title: "Flag activity + football rounders", kind: "activity" },
+      { time: "Afternoon", title: "Finish short film", kind: "milestone" },
+      { time: "5:00 PM",  title: "Dinner crew starts cooking", kind: "meal" },
+      { time: "Evening",  title: "Final group dinner", kind: "meal" },
+      { time: "Night",    title: "🎆 4th of July party", kind: "activity" },
     ],
     blocks: [
       { time: "Morning", emoji: "🛌", items: [
-        "Sleep in if you need it",
+        "Wake up at 9am",
+        "Brunch crew (Ella, Marie, Titun, Nike, Tanou) makes coffee, tea, fruit & snacks",
+        "Morning activity — go on a run, table tennis, group workouts etc.",
         "Group brunch",
-        "Morning walk · canoe · waterfall trail",
       ]},
       { time: "Afternoon", emoji: "🚣", items: [
-        "Big group activity — zipline, ATVs, lake day",
-        "Last big outing of the trip",
-        "Grocery run if anything's missing",
+        "Lunch/grill crew (Bolu, Chimdi, Laurianne, Frances) activates, everyone else gets ready",
+        "We all eat",
+        "Lunch/grill crew gets ready",
+        "Afternoon activity — flag activity and football rounders",
+        "Finish the short film",
       ]},
-      { time: "Evening", emoji: "🌙", items: [
-        "Final group dinner — go all out",
-        "Trip highlight reel + group recap",
-        "Last bonfire & celebration",
-        "Pre-pack for tomorrow's checkout",
+      { time: "Last Night", emoji: "🌙", items: [
+        "Dinner crew (Godswill, Sheilla, Rose, Hadidja, Hafeezah, Winnie) starts getting food ready at 5PM",
+        "Everyone else starts getting ready for the night",
+        "We all eat",
+        "🎆 4th of July party",
       ]},
     ],
   },
   {
     id: "d4", label: "Day 4", date: "Sunday, July 5", short: "Sun",
     dateISO: "2026-07-05",
-    theme: "Checkout & Head Home", badge: "🏠 take us home",
+    theme: "Checkout & Head Home", badge: "🏠 checkout, lake & head home",
     program: [
       { time: "all day",  title: "Rose's birthday 🌹", kind: "birthday" },
-      { time: "9:30 AM",  title: "Final group breakfast", kind: "meal" },
-      { time: "11:00 AM", title: "Clean rooms + common areas", kind: "errand" },
-      { time: "1:00 PM",  title: "Trash out, sweep for personal items", kind: "errand" },
-      { time: "3:00 PM",  title: "Group photo 📸", kind: "milestone" },
-      { time: "4 – 6 PM", title: "Checkout · drive home", kind: "drive" },
+      { time: "Morning",  title: "Final group breakfast", kind: "meal" },
+      { time: "Morning",  title: "Clean rooms + common areas, strip beds, take out trash", kind: "errand" },
+      { time: "Morning",  title: "Full sweep — no personal items left behind", kind: "errand" },
+      { time: "1:30 PM",  title: "Checkout — return keys to host", kind: "milestone" },
+      { time: "Afternoon", title: "Visit the village & lake", kind: "activity" },
+      { time: "Afternoon", title: "Group photo 📸 + head home", kind: "drive" },
     ],
     blocks: [
-      { time: "Morning", emoji: "🧹", items: [
+      { time: "Cleanup & Checkout", emoji: "🧹", items: [
         "🌹 Rose's birthday — give her her flowers",
-        "Final breakfast all together",
-        "Clean rooms + common areas thoroughly",
-        "Strip bedsheets if the host requires",
-        "Take out ALL the trash",
-        "Sweep for personal items left behind",
-        "Return keys / confirm lockup with Arnaud",
+        "Wake up & have a final breakfast",
+        "Clean all rooms & common areas thoroughly",
+        "Strip bedsheets if required by host",
+        "Take out all trash",
+        "Do a full sweep — no personal items left behind",
+        "Return keys to host",
+        "Checkout time: 1:30pm",
       ]},
-      { time: "Drive home", emoji: "🚗", items: [
-        "Settle ALL shared costs before leaving",
+      { time: "Village & Lake", emoji: "🚗", items: [
+        "Settle all remaining shared costs before leaving",
+        "Drive to the village and visit the lake",
         "Group photo before departure 📸",
-        "Out between 4 — 6pm",
-        "Estimated arrival home (TBD)",
+        "Head home",
       ]},
     ],
   },
 ];
 
 const GROCERIES = {
-  "Breakfast": ["Eggs","Bread","Butter","Jam","Peanut butter","Orange juice","Coffee","Milk","Cereal","Yogurt"],
-  "Lunch & Dinner": ["Pasta","Rice","Potatoes","Chicken","Ground beef","Hot dogs","Burgers + buns","Ketchup","Mustard","Mayo","BBQ sauce","Soy sauce","Peppers","Onions","Corn","Tomatoes","Salad mix"],
-  "Snacks": ["Chips","Dips","Crackers","Fruit","Nuts"],
-  "Drinks": ["Water (cases)","Juice","Sodas","Beer","Mix drinks","Ice"],
-  "Essentials": ["Paper plates","Cups","Napkins","Aluminum foil","Trash bags","Dish soap","Sponge","Lighter / matches"],
-  "Extras": ["Football","Table-tennis balls","Bluetooth speaker"],
+  "Breakfast": ["Milk","Cereal","Fruits","Juice","Eggs","Pancake mix","Maple bacon","Maple syrup","Tea and coffee"],
+  "Lunch & Dinner": ["Chicken thighs (boneless)","Chicken drumsticks","Ground beef","Tomato paste","BBQ sauce","Onions","Lasagna pasta (oven ready)","Rice","French fries","Burger buns","Lettuce","Tomatoes","Potatoes","Garlic","Moutarde Dijon","Parsley","Lemon","Ginger","Condiments","Cheese slices","Mozzarella cheese"],
+  "Snacks": ["Snacks"],
+  "Drinks": ["Alcohol from SAQ","Soda","Plastic cups"],
+  "Essentials": ["Paper plates","Paper towels","Tissue","Trash bags","Air freshener","Olive oil","Spices"],
 };
 
 const ACTIVITY_IDEAS = [
@@ -192,23 +210,47 @@ const ACTIVITY_IDEAS = [
 ];
 
 const HOUSE_RULES = [
-  "Respect the chalet — leave it how we found it",
+  "Respect the chalet — leave it as you found it",
   "No smoking indoors",
-  "Everyone pitches in for cooking & cleaning",
-  "Keep the noise reasonable after midnight (we PLAY tho)",
-  "All shared costs settled BEFORE we leave",
-  "Nike holds the chalet code at all times 🔑",
-  "No outside guests without group approval",
+  "Everyone pitches in for cooking & cleaning (schedule coming through)",
+  "Keep noise levels reasonable after midnight (we PLAY tho)",
+  "All shared expenses must be settled before we leave",
+  "One designated person holds the chalet key at all times (Nike) 🔑",
+  "No guests not on this list without approval",
+  "Love Island debates stay respectful — no attacking anyone. If it gets too hectic we'll just turn it off",
+  "Peace and love at all times",
+  "Try not to take too long in the bathroom when we're all getting ready",
+  "If you make a mess with food or drinks, clean it instantly",
+  "No littering outside",
+  "Always knock before entering any bathroom",
+  "Brunch at 11AM and dinner at 8PM",
+  "Lunch is on the grill or something light — nothing crazy",
+  "YOU MUST OBEY YOUR MEAL SHIFTS",
+  "Dress to impress every night",
+  "Come with sports attire for the Ojoro shoot — top end quality stuff",
+  "Once you finish eating, put your dishes in the dishwasher",
+  "WAKE UP AT 9AM",
 ];
 
 const EMERGENCY = [
   ["🚒", "Emergency services", "911"],
-  ["🏥", "Nearest hospital", "Hôpital de Sainte-Agathe-des-Monts (~30 min)"],
+  ["🏥", "Nearest hospital", "TBD"],
   ["🏔️", "Closest town · pharmacy", "Mont-Tremblant village (~10 min)"],
-  ["🏠", "Chalet host", "Arnaud · message via Airbnb"],
-  ["👤", "Co-host", "Lucia"],
+  ["🏠", "Chalet host", "Drummond Boyz"],
+  ["👤", "Trip organizer", "Ojoro mtl"],
   ["🔑", "Door code holder", "Nike"],
   ["📋", "QC registration #", "315287"],
+];
+
+const MEAL_DUTY = [
+  { day: "Thursday dinner", crew: "Everyone / anyone who wants to" },
+  { day: "Friday brunch", crew: "Nike, Ella, Marie, Sultan" },
+  { day: "Friday lunch/grill", crew: "Frances, Chimdi, Tanou, Winnie" },
+  { day: "Friday dinner", crew: "Rose, Hadidja, Hafeezah, Kerry, Sheilla" },
+  { day: "Saturday brunch", crew: "Ella, Marie, Titun, Nike, Tanou" },
+  { day: "Saturday lunch/grill", crew: "Bolu, Chimdi, Laurianne, Frances" },
+  { day: "Saturday dinner", crew: "Godswill, Sheilla, Rose, Hadidja, Hafeezah, Winnie" },
+  { day: "Sunday brunch", crew: "Everyone / anyone who wants to" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -447,7 +489,7 @@ function HomeTab() {
           <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>Jul 2 – 5, 2026</Pill>
             <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>Les Laurentides 🇨🇦</Pill>
-            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>17 of us</Pill>
+            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>18 of us</Pill>
           </div>
         </div>
       </div>
@@ -510,7 +552,7 @@ function HomeTab() {
                   [CHALET.brs, "bedrooms"],
                   [CHALET.beds, "beds"],
                   [CHALET.baths, "baths"],
-                  ["17", "of us"],
+                  ["18", "of us"],
                 ].map(([big, sm]) => (
                   <div key={sm} style={{
                     background: T.bg, borderRadius: 10, padding: '8px 4px', textAlign: 'center',
@@ -556,7 +598,7 @@ function HomeTab() {
                 marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 fontSize: 12, color: T.inkSoft, fontFamily: T.body,
               }}>
-                <span>Hosted by {CHALET.host} + {CHALET.cohost}</span>
+                <span>Hosted by {CHALET.host}</span>
                 <span>QC #{CHALET.reg}</span>
               </div>
             </div>
@@ -612,7 +654,7 @@ function HomeTab() {
 
       {/* Roster preview */}
       <div style={{ marginTop: 28 }}>
-        <SectionTitle kicker="the squad">17 of us</SectionTitle>
+        <SectionTitle kicker="the squad">18 of us</SectionTitle>
         <div style={{ padding: '0 20px' }}>
           <Card style={{ padding: 14 }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -813,7 +855,7 @@ function RoomsTab() {
         <h1 style={{
           margin: 0, fontFamily: T.display, fontSize: 44, lineHeight: 0.95,
           color: T.ink, letterSpacing: -0.8,
-        }}>7 rooms,<br/>17 of us</h1>
+        }}>7 rooms,<br/>18 of us</h1>
       </div>
 
       {[1, 2].map(fl => (
@@ -874,7 +916,7 @@ function RoomsTab() {
       ))}
 
       <div style={{ marginTop: 28 }}>
-        <SectionTitle kicker="the whole crew">all 17 of us</SectionTitle>
+        <SectionTitle kicker="the whole crew">all 18 of us</SectionTitle>
         <div style={{ padding: '0 20px' }}>
           <Card style={{ padding: 14 }}>
             <div style={{
@@ -972,6 +1014,56 @@ function ListsTab() {
                     <CheckRow key={`${g}-${i}`} id={`gro-${g}-${i}`}>{it}</CheckRow>
                   ))}
                 </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="cars" kicker="🚗 getting there" title="Car arrangements">
+          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {CARS.map(c => (
+              <div key={c.driver} style={{
+                padding: 12, borderRadius: 12,
+                background: T.bg, border: `1px solid ${T.border}`,
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
+                  <span style={{ fontFamily: T.body, fontWeight: 700, fontSize: 14, color: T.ink }}>{c.driver}'s car</span>
+                  <span style={{ fontSize: 12, color: T.inkSoft, fontFamily: T.body, fontWeight: 600 }}>{c.time}</span>
+                </div>
+                <div style={{ marginTop: 4, fontSize: 12, color: T.inkSoft, fontFamily: T.body }}>
+                  {c.stop} → {c.to} · {c.meet}
+                </div>
+                <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {c.ppl.map(p => (
+                    <span key={p} style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 8,
+                      padding: '5px 12px 5px 5px', borderRadius: 999,
+                      background: T.surface, border: `1px solid ${T.border}`,
+                    }}>
+                      <Avatar name={p} size={20} />
+                      <span style={{ fontSize: 12, fontWeight: 600, color: T.ink, fontFamily: T.body }}>{p}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="mealduty" kicker="🍽️ kitchen crew" title="Meal duty">
+          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {MEAL_DUTY.map((m, i) => (
+              <div key={m.day} style={{
+                padding: '10px 0',
+                borderBottom: i < MEAL_DUTY.length - 1 ? `1px solid ${T.border}` : 'none',
+              }}>
+                <div style={{
+                  fontSize: 11, letterSpacing: 1, textTransform: 'uppercase',
+                  color: T.inkSoft, fontWeight: 700, fontFamily: T.body,
+                }}>{m.day}</div>
+                <div style={{
+                  fontFamily: T.body, fontWeight: 600, fontSize: 14, color: T.ink, marginTop: 2,
+                }}>{m.crew}</div>
               </div>
             ))}
           </div>
