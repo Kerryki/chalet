@@ -1,256 +1,102 @@
-// site.jsx — Nepo Vibezz · Tremblant Chalet Trip 2026
-// Palm Club theme · mobile-first · single-page · 5 tabs.
+// site.jsx — Le Livre des Vacances · Brampton
+// Palm Club theme · mobile-first · single-page · 4 tabs.
 
 // ─────────────────────────────────────────────────────────────
 // Trip data
 // ─────────────────────────────────────────────────────────────
-const TRIP_NAME = "Ojoro BnB";
-const TRIP_TAG  = "Tremblant Takeover · Summer '26";
-const TRIP_START = new Date('2026-07-02T18:00:00-04:00');
-const TRIP_END   = new Date('2026-07-05T18:00:00-04:00');
+const TRIP_NAME = "Le Livre des Vacances";
+const TRIP_TAG  = "Brampton · ★4,94";
 
-const CHALET = {
-  title: "Living in the nature 10 min from Tremblant",
-  area: "65 Mont-Sanford, La Conception, Québec, J0T 1M0",
-  host: "Drummond Boyz",
-  rating: "4.87",
-  reviews: 85,
-  brs: 7, beds: 11, baths: 3.5, max: 18,
-  reg: "315287",
-  airbnb: "https://www.airbnb.ca/rooms/744323772462893119",
-  perks: ["Hot tub (year-round)", "Ping pong + games room", "Garden + mountain view", "Self check-in · smart lock", "WiFi"],
+const LOGEMENT = {
+  area: "Brampton",
+  rating: "4,94",
+  brs: 8,       // chambres
+  beds: 9,      // lits — pas final
+  bedsNote: "pas final",
+  baths: 8,     // salles de bain privées (une par chambre)
+  guests: 23,
 };
 
-const ROSTER = ["Nike","Kerry","Chimdi","Bolu","Marie","Ella","Hadidja","Godswill","Rose","Hafeezah","Sheilla","Toni","Frances","Laurianne","Winnie","Titun","Sultan","Tanou"];
-
-const BIRTHDAYS = [
-  { name: "Hadidja", day: "Thu · Jul 2", note: "kicking off the trip with cake 🎂" },
-  { name: "Rose",    day: "Sun · Jul 5", note: "closing it out in style 🌹" },
+const ROSTER = [
+  "Hervé","Jacques","Eugénie","Romain","Mylène","Francine","Stephanie","Serges",
+  "Beroukia","Emma","Manou","Illian","Paule.E","Lyndsay","Lovia","Leyanne",
+  "Liam","Nathan","Nathan M.","Yohann","Logan","Ethan","Winnie",
 ];
 
 const ROOMS = [
-  { floor: 1, n: 1, bed: "Queen Bed",            ppl: ["Ella","Sheilla"] },
-  { floor: 1, n: 2, bed: "2 Single Beds",        ppl: ["Nike","Chimdi","Tanou"] },
-  { floor: 1, n: 3, bed: "King + Air Mattress",  ppl: ["Marie","Hadidja","Titun","Hafeezah"] },
-  { floor: 1, n: 4, bed: "Queen Bed",            ppl: ["Kerry","Rose"] },
-  { floor: 2, n: 5, bed: "Queen Bed",            ppl: ["Laurianne","Winnie","Frances"] },
-  { floor: 2, n: 6, bed: "2 Single Beds",        ppl: ["Bolu","Sultan"] },
-  { floor: 2, n: 7, bed: "2 Single Beds",        ppl: ["Godswill","Toni"] },
+  { n: 1, ppl: ["Hervé","Eugénie"] },
+  { n: 2, ppl: ["Jacques","Mylène"] },
+  { n: 3, ppl: ["Romain","Francine"] },
+  { n: 4, ppl: ["Serges","Stephanie"] },
+  { n: 5, ppl: ["Manou","Lyndsay","Paule.E"] },
+  { n: 6, ppl: ["Leyanne","Lovia","Beroukia"] },
+  { n: 7, ppl: ["Yohann","Nathan M.","Logan","Ethan"] },
+  { n: 8, ppl: ["Emma","Nathan","Liam","Illian"] },
 ];
 
-const CARS = [
-  { driver: "Ella",      time: "4:30 – 5:00 PM", stop: "Costco (Laval)",  to: "Chalet", ppl: ["Ella","Nike","Sheilla","Marie"],            meet: "Meeting at Costco Laval" },
-  { driver: "Rose",      time: "5:00 – 5:30 PM", stop: "SAQ",             to: "Chalet", ppl: ["Rose","Hadidja","Hafeezah","Titun"],         meet: "Meeting at Hadidja's" },
-  { driver: "Kerry",     time: "TBD",            stop: "Cake pickup",     to: "Chalet", ppl: ["Kerry","Chimdi","Tanou","Frances"],          meet: "Meeting at Papineau" },
-  { driver: "Laurianne", time: "4:30 – 5:00 PM", stop: "Costco",          to: "Chalet", ppl: ["Laurianne","Bolu","Winnie"],                 meet: "Pick up" },
-  { driver: "Sultan",    time: "6:30 – 7:00 PM", stop: "Straight there",  to: "Chalet", ppl: ["Sultan","Godswill","Toni"],                  meet: "Pick up at Papineau" },
+const EXTRA_BED = { label: "Lit simple", person: "Winnie" };
+
+const PACKING_LIST = [
+  "Maillot de bain",
+  "Tenues noir et blanc pour la dernière soirée",
+  "Crème solaire",
+  "Chargeur de téléphone",
+  "Beaucoup d'énergie et beaucoup de patience",
 ];
 
 const DAYS = [
   {
-    id: "d1", label: "Day 1", date: "Thursday, July 2", short: "Thu",
-    dateISO: "2026-07-02",
-    theme: "Arrival & Settle In", badge: "🚗 road trip + settle in",
-    program: [
-      { time: "all day",   title: "Hadidja's birthday 🎂", kind: "birthday" },
-      { time: "4:30 – 7 PM", title: "Cars depart Montréal — Costco, SAQ, cake pickup, Papineau", kind: "drive" },
-      { time: "4 – 10 PM", title: "Arrive at the chalet (check-in after 4pm)", kind: "milestone" },
-      { time: "Evening",   title: "Group dinner — everyone pitches in", kind: "meal" },
-      { time: "Evening",   title: "🎂 Hadidja's birthday celebration", kind: "birthday" },
-      { time: "Late",      title: "Game night + Love Island watch party", kind: "activity" },
-    ],
-    blocks: [
-      { time: "Departure", emoji: "☀️", items: [
-        "Confirm everyone is ready & packed",
-        "Designated driver(s) confirmed for each of the 5 cars",
-        "Departure times locked in — Ella & Laurianne 4:30–5pm, Rose 5–5:30pm, Sultan 6:30–7pm, Kerry TBD (see Cars list)",
-        "Grocery stop on the way (Costco / SAQ / cake pickup)",
-        "Road-trip playlist queued 🎶",
-      ]},
-      { time: "Arrival at Chalet", emoji: "📍", items: [
-        "Arrive at chalet — estimated between 4 and 10pm",
-        "Check-in & collect keys from host (Nike holds the key)",
-        "House tour — rooms already assigned (see Rooms tab)",
-        "Unload groceries & supplies",
-        "Set up the common areas (speaker, drinks, snacks)",
-      ]},
-      { time: "First Night", emoji: "🔥", items: [
-        "Group dinner — cook together",
-        "Drinks & get settled in",
-        "🎂 Hadidja's birthday celebration",
-        "Game night and watch Love Island",
-      ]},
+    id: "mer", label: "Mercredi", theme: "Départ",
+    dressJour: "Jeans (short) + haut jaune pastel",
+    items: [
+      "Départ pour Brampton",
+      "Faire cuire les haricots ce soir (pour le BHB)",
+      "Préparer la pâte à beignets — ce soir, ou très tôt jeudi matin",
     ],
   },
   {
-    id: "d2", label: "Day 2", date: "Friday, July 3", short: "Fri",
-    dateISO: "2026-07-03",
-    theme: "Full Send Day", badge: "🎉 the main event",
-    program: [
-      { time: "9:00 AM",  title: "Wake up + simple breakfast (coffee, tea, fruit, snacks)", kind: "meal" },
-      { time: "Morning",  title: "Workout — run, table tennis, group workouts", kind: "activity" },
-      { time: "Morning",  title: "Ojoro sports shoot 📸 — sports attire required", kind: "activity" },
-      { time: "Afternoon", title: "Brunch crew cooks, everyone else gets ready", kind: "meal" },
-      { time: "Afternoon", title: "Free time / chill — do whatever", kind: "activity" },
-      { time: "3:00 PM",  title: "Short film auditioning starts", kind: "milestone" },
-      { time: "5:00 PM",  title: "Dinner crew starts cooking", kind: "meal" },
-      { time: "Evening",  title: "Group dinner", kind: "meal" },
-      { time: "Evening",  title: "Love Island watch party", kind: "activity" },
-      { time: "Night",    title: "Music / chill / hot tub", kind: "activity" },
-    ],
-    blocks: [
-      { time: "Morning", emoji: "☀️", items: [
-        "Wake up at 9am",
-        "Brunch crew (Nike, Ella, Marie, Sultan) makes coffee, tea, fruit & snacks",
-        "Morning activity — go on a run, table tennis, group workouts etc.",
-        "Ojoro sports shoot — bring sports attire (top end quality stuff)",
-      ]},
-      { time: "Afternoon", emoji: "🌞", items: [
-        "Lunch/grill crew (Frances, Chimdi, Tanou, Winnie) activates, everyone else gets ready",
-        "We all eat",
-        "Lunch/grill crew gets ready for the rest of the day",
-        "Free time — chill for a bit, people do whatever",
-        "Short film auditioning starts at 3PM",
-      ]},
-      { time: "Evening", emoji: "🎵", items: [
-        "Dinner crew (Rose, Hadidja, Hafeezah, Kerry, Sheilla) starts getting food ready at 5PM",
-        "Everyone else starts getting ready for the night",
-        "We all eat",
-        "Love Island watch party",
-        "Music / chill / hot tub",
-      ]},
-    ],
+    id: "jeu", label: "Jeudi", theme: "Sortie — musée des sciences",
+    dressJour: "Short beige + haut blanc",
+    dressSoir: "Soirée spa : peignoir blanc, kit pédicure/thalasso, vin mousseux — puis soirée pyjama en satin (nude pour filles/femmes, noir pour hommes/garçons)",
+    meals: {
+      matin: ["BHB", "Petite salade ou fruit"],
+      midi: ["✗"],
+      soir: ["Épinards", "Spaghetti sauce viande hachée", "Barbecue"],
+    },
   },
   {
-    id: "d3", label: "Day 3", date: "Saturday, July 4", short: "Sat",
-    dateISO: "2026-07-04",
-    theme: "Adventure & Relax", badge: "🌿 last full day — make it count",
-    program: [
-      { time: "9:00 AM",  title: "Wake up + simple breakfast (coffee, tea, fruit, snacks)", kind: "meal" },
-      { time: "Morning",  title: "Workout — run, table tennis, group workouts", kind: "activity" },
-      { time: "Brunch",   title: "Group brunch", kind: "meal" },
-      { time: "Afternoon", title: "BBQ/lunch crew cooks, everyone else gets ready", kind: "meal" },
-      { time: "Afternoon", title: "Flag activity + football rounders", kind: "activity" },
-      { time: "Afternoon", title: "Finish short film", kind: "milestone" },
-      { time: "5:00 PM",  title: "Dinner crew starts cooking", kind: "meal" },
-      { time: "Evening",  title: "Final group dinner", kind: "meal" },
-      { time: "Night",    title: "🎆 4th of July party", kind: "activity" },
-    ],
-    blocks: [
-      { time: "Morning", emoji: "🛌", items: [
-        "Wake up at 9am",
-        "Brunch crew (Ella, Marie, Titun, Nike, Tanou) makes coffee, tea, fruit & snacks",
-        "Morning activity — go on a run, table tennis, group workouts etc.",
-        "Group brunch",
-      ]},
-      { time: "Afternoon", emoji: "🚣", items: [
-        "Lunch/grill crew (Bolu, Chimdi, Laurianne, Frances) activates, everyone else gets ready",
-        "We all eat",
-        "Lunch/grill crew gets ready",
-        "Afternoon activity — flag activity and football rounders",
-        "Finish the short film",
-      ]},
-      { time: "Last Night", emoji: "🌙", items: [
-        "Dinner crew (Godswill, Sheilla, Rose, Hadidja, Hafeezah, Winnie) starts getting food ready at 5PM",
-        "Everyone else starts getting ready for the night",
-        "We all eat",
-        "🎆 4th of July party",
-      ]},
-    ],
+    id: "ven", label: "Vendredi", theme: "Matinée sportive",
+    dressJour: "Équipement de sport — pour parents et enfants",
+    dressSoir: "Noir / bleu nuit et blanc",
+    meals: {
+      matin: ["Brunch fruits — pain perdu, œufs brouillés, bacon, lait/céréales — ou hot-dog + pancakes", "(ou plus simple : omelette)"],
+      midi: ["Ndolé", "Fry rice"],
+      soir: ["Grillade", "Lasagne", "Fry rice", "Boulettes", "Œuf à la coque → piment + condiment"],
+    },
   },
   {
-    id: "d4", label: "Day 4", date: "Sunday, July 5", short: "Sun",
-    dateISO: "2026-07-05",
-    theme: "Checkout & Head Home", badge: "🏠 checkout, lake & head home",
-    program: [
-      { time: "all day",  title: "Rose's birthday 🌹", kind: "birthday" },
-      { time: "Morning",  title: "Final group breakfast", kind: "meal" },
-      { time: "Morning",  title: "Clean rooms + common areas, strip beds, take out trash", kind: "errand" },
-      { time: "Morning",  title: "Full sweep — no personal items left behind", kind: "errand" },
-      { time: "1:30 PM",  title: "Checkout — return keys to host", kind: "milestone" },
-      { time: "Afternoon", title: "Visit the village & lake", kind: "activity" },
-      { time: "Afternoon", title: "Group photo 📸 + head home", kind: "drive" },
-    ],
-    blocks: [
-      { time: "Cleanup & Checkout", emoji: "🧹", items: [
-        "🌹 Rose's birthday — give her her flowers",
-        "Wake up & have a final breakfast",
-        "Clean all rooms & common areas thoroughly",
-        "Strip bedsheets if required by host",
-        "Take out all trash",
-        "Do a full sweep — no personal items left behind",
-        "Return keys to host",
-        "Checkout time: 1:30pm",
-      ]},
-      { time: "Village & Lake", emoji: "🚗", items: [
-        "Settle all remaining shared costs before leaving",
-        "Drive to the village and visit the lake",
-        "Group photo before departure 📸",
-        "Head home",
-      ]},
-    ],
+    id: "sam", label: "Samedi", theme: "Parc aquatique",
+    dressJour: "Short jeans + haut au choix par famille — prévoir maillot de bain",
+    meals: {
+      matin: ["Déjeuner : salade + jambon + maïs doux"],
+      midi: ["—"],
+      soir: ["Sauce tomate + viande hachée", "Bouillon pâte de bœuf"],
+      idees: ["Salade verte ou salade au pois chiches", "Avocat, tomates, oignons", "Steak de bœuf, concombres, feta", "Crêpes ou pancakes"],
+    },
+  },
+  {
+    id: "dim", label: "Dimanche", theme: "Départ",
+    dressJour: "Au choix",
+    items: ["Ne pas oublier : crème solaire, lunettes de soleil"],
+    meals: {
+      matin: ["Restes de la semaine + fruits, œufs et pancakes", "Croissant si possible"],
+    },
   },
 ];
 
-const GROCERIES = {
-  "Breakfast": ["Milk","Cereal","Fruits","Juice","Eggs","Pancake mix","Maple bacon","Maple syrup","Tea and coffee"],
-  "Lunch & Dinner": ["Chicken thighs (boneless)","Chicken drumsticks","Ground beef","Tomato paste","BBQ sauce","Onions","Lasagna pasta (oven ready)","Rice","French fries","Burger buns","Lettuce","Tomatoes","Potatoes","Garlic","Moutarde Dijon","Parsley","Lemon","Ginger","Condiments","Cheese slices","Mozzarella cheese"],
-  "Snacks": ["Snacks"],
-  "Drinks": ["Alcohol from SAQ","Soda","Plastic cups"],
-  "Essentials": ["Paper plates","Paper towels","Tissue","Trash bags","Air freshener","Olive oil","Spices"],
-};
-
-const ACTIVITY_IDEAS = [
-  { name: "Group Uno",                note: "high stakes only" },
-  { name: "Love Island watch party",  note: "couch + popcorn" },
-  { name: "Talent show",              note: "everyone has to perform 😤" },
-  { name: "Beer pong tournament",     note: "bracket on the fridge" },
-  { name: "Ping pong bracket",        note: "the chalet has a table 🏓" },
-  { name: "Card games night",         note: "spades · president · poker" },
-];
-
-const HOUSE_RULES = [
-  "Respect the chalet — leave it as you found it",
-  "No smoking indoors",
-  "Everyone pitches in for cooking & cleaning (schedule coming through)",
-  "Keep noise levels reasonable after midnight (we PLAY tho)",
-  "All shared expenses must be settled before we leave",
-  "One designated person holds the chalet key at all times (Nike) 🔑",
-  "No guests not on this list without approval",
-  "Love Island debates stay respectful — no attacking anyone. If it gets too hectic we'll just turn it off",
-  "Peace and love at all times",
-  "Try not to take too long in the bathroom when we're all getting ready",
-  "If you make a mess with food or drinks, clean it instantly",
-  "No littering outside",
-  "Always knock before entering any bathroom",
-  "Brunch at 11AM and dinner at 8PM",
-  "Lunch is on the grill or something light — nothing crazy",
-  "YOU MUST OBEY YOUR MEAL SHIFTS",
-  "Dress to impress every night",
-  "Come with sports attire for the Ojoro shoot — top end quality stuff",
-  "Once you finish eating, put your dishes in the dishwasher",
-  "WAKE UP AT 9AM",
-];
-
-const EMERGENCY = [
-  ["🚒", "Emergency services", "911"],
-  ["🏥", "Nearest hospital", "TBD"],
-  ["🏔️", "Closest town · pharmacy", "Mont-Tremblant village (~10 min)"],
-  ["🏠", "Chalet host", "Drummond Boyz"],
-  ["👤", "Trip organizer", "Ojoro mtl"],
-  ["🔑", "Door code holder", "Nike"],
-  ["📋", "QC registration #", "315287"],
-];
-
-const MEAL_DUTY = [
-  { day: "Thursday dinner", crew: "Everyone / anyone who wants to" },
-  { day: "Friday brunch", crew: "Nike, Ella, Marie, Sultan" },
-  { day: "Friday lunch/grill", crew: "Frances, Chimdi, Tanou, Winnie" },
-  { day: "Friday dinner", crew: "Rose, Hadidja, Hafeezah, Kerry, Sheilla" },
-  { day: "Saturday brunch", crew: "Ella, Marie, Titun, Nike, Tanou" },
-  { day: "Saturday lunch/grill", crew: "Bolu, Chimdi, Laurianne, Frances" },
-  { day: "Saturday dinner", crew: "Godswill, Sheilla, Rose, Hadidja, Hafeezah, Winnie" },
-  { day: "Sunday brunch", crew: "Everyone / anyone who wants to" },
+const NOTES = [
+  { emoji: "🎲", title: "Programme", text: "Soirée jeux tous les soirs" },
+  { emoji: "🍳", title: "Cuisine", text: "Rotation de 3 personnes différentes pour chaque repas" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -273,23 +119,8 @@ const T = {
 };
 
 // ─────────────────────────────────────────────────────────────
-// Hooks & date helpers
+// Hooks
 // ─────────────────────────────────────────────────────────────
-function todayISO() {
-  const d = new Date();
-  const tz = d.getTimezoneOffset() * 60000;
-  return new Date(d - tz).toISOString().slice(0, 10);
-}
-
-const KIND_STYLE = {
-  meal:      { color: '#E0A832', label: 'Meal',     emoji: '🍽️' },
-  activity:  { color: '#C94A2C', label: 'Activity', emoji: '🎉' },
-  birthday:  { color: '#C94A2C', label: 'Birthday', emoji: '🎂' },
-  drive:     { color: '#5C7264', label: 'Drive',    emoji: '🚗' },
-  errand:    { color: '#5C7264', label: 'To do',    emoji: '✓'  },
-  milestone: { color: '#1B3A2D', label: 'Moment',   emoji: '⭐' },
-};
-
 function useLocal(key, init) {
   const [v, setV] = React.useState(() => {
     try {
@@ -301,22 +132,6 @@ function useLocal(key, init) {
     try { localStorage.setItem(key, JSON.stringify(v)); } catch {}
   }, [key, v]);
   return [v, setV];
-}
-
-function useCountdown(target) {
-  const [now, setNow] = React.useState(() => Date.now());
-  React.useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(t);
-  }, []);
-  const ms = Math.max(0, target.getTime() - now);
-  return {
-    d: Math.floor(ms / 86400000),
-    h: Math.floor((ms % 86400000) / 3600000),
-    m: Math.floor((ms % 3600000) / 60000),
-    s: Math.floor((ms % 60000) / 1000),
-    done: ms <= 0,
-  };
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -361,7 +176,7 @@ function Card({ children, style, onClick }) {
 }
 
 function CheckRow({ id, children }) {
-  const [done, setDone] = useLocal(`nepo:check:${id}`, false);
+  const [done, setDone] = useLocal(`vac:check:${id}`, false);
   return (
     <button
       type="button"
@@ -432,41 +247,10 @@ function PalmDecor({ color = T.bg, opacity = 0.18 }) {
   );
 }
 
-
-function ProgramRow({ ev, dark, last }) {
-  const k = KIND_STYLE[ev.kind] || KIND_STYLE.activity;
-  const isBirthday = ev.kind === 'birthday';
-  const timeColor  = dark ? 'rgba(241,232,210,0.6)' : T.inkSoft;
-  const titleColor = dark ? T.bg : T.ink;
-  return (
-    <div style={{
-      display: 'grid', gridTemplateColumns: '72px 14px 1fr', alignItems: 'baseline',
-      gap: 10, padding: '10px 0',
-      borderBottom: last ? 'none' : `1px solid ${dark ? 'rgba(241,232,210,0.08)' : T.border}`,
-    }}>
-      <div style={{
-        fontSize: 11, fontWeight: 700, color: timeColor, fontFamily: T.body,
-        textTransform: 'uppercase', letterSpacing: 0.6,
-        fontVariantNumeric: 'tabular-nums',
-      }}>{ev.time}</div>
-      <div style={{
-        width: 8, height: 8, borderRadius: '50%',
-        background: k.color, marginTop: 6,
-        boxShadow: isBirthday ? `0 0 0 3px ${k.color}26` : 'none',
-      }}></div>
-      <div style={{
-        fontSize: 14, fontFamily: T.body, color: titleColor,
-        fontWeight: isBirthday ? 700 : 500, lineHeight: 1.35,
-      }}>{ev.title}</div>
-    </div>
-  );
-}
-
 // ─────────────────────────────────────────────────────────────
-// HOME
+// ACCUEIL (Home)
 // ─────────────────────────────────────────────────────────────
-function HomeTab() {
-  const c = useCountdown(TRIP_START);
+function AccueilTab() {
   return (
     <div style={{ paddingBottom: 28 }}>
       {/* Hero */}
@@ -481,52 +265,26 @@ function HomeTab() {
             fontFamily: T.body, fontSize: 11, letterSpacing: 1.8,
             textTransform: 'uppercase', color: 'rgba(241,232,210,0.65)',
             fontWeight: 700, marginBottom: 10,
-          }}>{TRIP_TAG}</div>
+          }}>Présenté par</div>
           <h1 style={{
             margin: 0, fontFamily: T.display, fontWeight: 400,
-            fontSize: 72, lineHeight: 0.9, color: T.bg, letterSpacing: -1.5,
+            fontSize: 56, lineHeight: 0.95, color: T.bg, letterSpacing: -1,
           }}>{TRIP_NAME}</h1>
           <div style={{ marginTop: 16, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>Jul 2 – 5, 2026</Pill>
-            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>Les Laurentides 🇨🇦</Pill>
-            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>18 of us</Pill>
+            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>📍 Brampton</Pill>
+            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>★ {LOGEMENT.rating}</Pill>
+            <Pill bg="rgba(241,232,210,0.15)" fg={T.bg}>{LOGEMENT.guests} personnes</Pill>
           </div>
         </div>
       </div>
 
-      {/* Countdown */}
-      <div style={{ padding: '24px 20px 4px' }}>
-        <div style={{
-          fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
-          color: T.inkSoft, fontWeight: 700, fontFamily: T.body, marginBottom: 10,
-        }}>{c.done ? "we are SO back" : "we touch grass in"}</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
-          {[['DAYS', c.d], ['HRS', c.h], ['MIN', c.m], ['SEC', c.s]].map(([lbl, v]) => (
-            <div key={lbl} style={{
-              background: T.surface, border: `1px solid ${T.border}`,
-              borderRadius: 14, padding: '14px 4px 10px', textAlign: 'center',
-            }}>
-              <div style={{
-                fontFamily: T.display, fontSize: 30, lineHeight: 1, color: T.ink,
-                fontVariantNumeric: 'tabular-nums', letterSpacing: -0.5,
-              }}>{String(v).padStart(2, '0')}</div>
-              <div style={{
-                marginTop: 6, fontSize: 10, letterSpacing: 1.2, fontWeight: 700,
-                color: T.inkSoft, fontFamily: T.body,
-              }}>{lbl}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Chalet card */}
+      {/* Logement card */}
       <div style={{ marginTop: 26 }}>
-        <SectionTitle kicker="where we're staying">the chalet</SectionTitle>
+        <SectionTitle kicker="où on loge">le logement</SectionTitle>
         <div style={{ padding: '0 20px' }}>
           <Card style={{ padding: 0, overflow: 'hidden' }}>
-            {/* Image placeholder strip */}
             <div style={{
-              height: 140, background: `linear-gradient(135deg, #1B3A2D 0%, #2A5746 50%, #3F8A6E 100%)`,
+              height: 120, background: `linear-gradient(135deg, #1B3A2D 0%, #2A5746 50%, #3F8A6E 100%)`,
               position: 'relative', overflow: 'hidden',
             }}>
               <PalmDecor color="#F1E8D2" opacity={0.22} />
@@ -534,25 +292,21 @@ function HomeTab() {
                 position: 'absolute', bottom: 12, left: 16, color: T.bg, fontFamily: T.body,
                 fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase', fontWeight: 700,
                 opacity: 0.8,
-              }}>★ {CHALET.rating} · {CHALET.reviews} reviews</div>
+              }}>★ {LOGEMENT.rating}</div>
             </div>
             <div style={{ padding: 16 }}>
               <div style={{
                 fontFamily: T.display, fontSize: 22, lineHeight: 1.1, color: T.ink,
                 letterSpacing: -0.2,
-              }}>{CHALET.title}</div>
-              <div style={{ marginTop: 6, fontSize: 13, color: T.inkSoft, fontFamily: T.body }}>
-                {CHALET.area}
-              </div>
+              }}>Logement — {LOGEMENT.area}</div>
 
               <div style={{
-                marginTop: 14, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8,
+                marginTop: 14, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8,
               }}>
                 {[
-                  [CHALET.brs, "bedrooms"],
-                  [CHALET.beds, "beds"],
-                  [CHALET.baths, "baths"],
-                  ["18", "of us"],
+                  [LOGEMENT.brs, "chambres"],
+                  [LOGEMENT.beds, "lits"],
+                  [LOGEMENT.baths, "s. de bain privées"],
                 ].map(([big, sm]) => (
                   <div key={sm} style={{
                     background: T.bg, borderRadius: 10, padding: '8px 4px', textAlign: 'center',
@@ -567,86 +321,27 @@ function HomeTab() {
                   </div>
                 ))}
               </div>
-
               <div style={{
-                marginTop: 14, paddingTop: 14, borderTop: `1px solid ${T.border}`,
-                display: 'flex', flexDirection: 'column', gap: 8,
-              }}>
-                {CHALET.perks.map(p => (
-                  <div key={p} style={{
-                    display: 'flex', alignItems: 'center', gap: 8,
-                    fontSize: 13, color: T.ink, fontFamily: T.body,
-                  }}>
-                    <span style={{ color: T.primary, fontWeight: 700 }}>·</span>
-                    <span>{p}</span>
-                  </div>
-                ))}
-              </div>
-
-              <a href={CHALET.airbnb} target="_blank" rel="noopener" style={{
-                marginTop: 16, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                gap: 8, padding: '13px 16px', borderRadius: 12,
-                background: T.primary, color: T.primaryInk,
-                fontFamily: T.body, fontWeight: 700, fontSize: 14, textDecoration: 'none',
-                letterSpacing: 0.2,
-              }}>
-                Open on Airbnb
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </a>
-
-              <div style={{
-                marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                fontSize: 12, color: T.inkSoft, fontFamily: T.body,
-              }}>
-                <span>Hosted by {CHALET.host}</span>
-                <span>QC #{CHALET.reg}</span>
-              </div>
+                marginTop: 8, fontSize: 11, color: T.inkSoft, fontFamily: T.body, fontStyle: 'italic',
+              }}>* nombre de lits {LOGEMENT.bedsNote}</div>
             </div>
           </Card>
         </div>
       </div>
 
-      {/* Birthdays */}
+      {/* Notes */}
       <div style={{ marginTop: 28 }}>
-        <SectionTitle kicker="🎉 birthdays on this trip">we're celebrating</SectionTitle>
+        <SectionTitle kicker="à retenir">au programme</SectionTitle>
         <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {BIRTHDAYS.map(b => (
-            <Card key={b.name} style={{
-              padding: 16, background: T.surface,
-              border: `1px solid ${T.primary}40`,
-              display: 'flex', alignItems: 'center', gap: 14,
+          {NOTES.map(n => (
+            <Card key={n.title} style={{
+              padding: 14, display: 'flex', alignItems: 'center', gap: 12,
             }}>
-              <Avatar name={b.name} size={48} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{
-                  fontFamily: T.display, fontSize: 22, color: T.ink, lineHeight: 1,
-                }}>{b.name}</div>
-                <div style={{
-                  marginTop: 4, fontSize: 13, color: T.inkSoft, fontFamily: T.body,
-                }}>{b.day} · {b.note}</div>
+              <span style={{ fontSize: 22 }}>{n.emoji}</span>
+              <div>
+                <div style={{ fontFamily: T.display, fontSize: 18, color: T.ink, lineHeight: 1.1 }}>{n.title}</div>
+                <div style={{ marginTop: 2, fontSize: 13, color: T.inkSoft, fontFamily: T.body }}>{n.text}</div>
               </div>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Quick stats */}
-      <div style={{ marginTop: 28, padding: '0 20px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-          {[
-            ['4', 'days'],
-            ['7', 'bedrooms'],
-            ['3', 'nights'],
-            ['10 min', 'to Tremblant'],
-          ].map(([big, sm]) => (
-            <Card key={sm} style={{ padding: '14px 14px 12px' }}>
-              <div style={{
-                fontFamily: T.display, fontSize: 32, color: T.ink, lineHeight: 1, letterSpacing: -0.5,
-              }}>{big}</div>
-              <div style={{
-                marginTop: 4, fontSize: 12, color: T.inkSoft,
-                fontFamily: T.body, textTransform: 'uppercase', letterSpacing: 1.1, fontWeight: 600,
-              }}>{sm}</div>
             </Card>
           ))}
         </div>
@@ -654,7 +349,7 @@ function HomeTab() {
 
       {/* Roster preview */}
       <div style={{ marginTop: 28 }}>
-        <SectionTitle kicker="the squad">18 of us</SectionTitle>
+        <SectionTitle kicker="la famille">{LOGEMENT.guests} personnes</SectionTitle>
         <div style={{ padding: '0 20px' }}>
           <Card style={{ padding: 14 }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -679,37 +374,26 @@ function HomeTab() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// DAYS
+// JOURS (Days)
 // ─────────────────────────────────────────────────────────────
-function DaysTab() {
-  const effectiveToday = todayISO();
+function MealBlock({ label, items }) {
+  if (!items || !items.length) return null;
+  return (
+    <div style={{ marginBottom: 10 }}>
+      <div style={{
+        fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase',
+        color: T.primary, fontWeight: 700, fontFamily: T.body, marginBottom: 4,
+      }}>{label}</div>
+      {items.map((it, i) => (
+        <div key={i} style={{ fontSize: 14, color: T.ink, fontFamily: T.body, lineHeight: 1.5 }}>{it}</div>
+      ))}
+    </div>
+  );
+}
 
-  const dayStatus = (dayISO) => {
-    if (effectiveToday === dayISO) return 'today';
-    if (effectiveToday < dayISO) return 'upcoming';
-    return 'done';
-  };
-
-  // default idx: today if in range, else first upcoming, else last
-  const computeDefaultIdx = () => {
-    const todayIdx = DAYS.findIndex(d => d.dateISO === effectiveToday);
-    if (todayIdx >= 0) return todayIdx;
-    const nextIdx = DAYS.findIndex(d => d.dateISO > effectiveToday);
-    if (nextIdx >= 0) return nextIdx;
-    return DAYS.length - 1;
-  };
-
-  const [idx, setIdx] = useLocal('nepo:day-idx', computeDefaultIdx());
-
+function JoursTab() {
+  const [idx, setIdx] = useLocal('vac:day-idx', 0);
   const d = DAYS[idx];
-  const status = dayStatus(d.dateISO);
-  const isToday = status === 'today';
-  const isDone  = status === 'done';
-
-  const statusPill =
-    isToday ? { bg: T.primary, fg: T.primaryInk, text: 'Today · live' } :
-    isDone  ? { bg: 'rgba(241,232,210,0.18)', fg: T.bg, text: '✓ Done' } :
-              { bg: 'rgba(241,232,210,0.18)', fg: T.bg, text: 'Upcoming' };
 
   return (
     <div style={{ paddingBottom: 28 }}>
@@ -717,211 +401,185 @@ function DaysTab() {
         <div style={{
           fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
           color: T.inkSoft, fontWeight: 700, fontFamily: T.body, marginBottom: 6,
-        }}>the plan</div>
+        }}>le programme</div>
         <h1 style={{
           margin: 0, fontFamily: T.display, fontSize: 44, lineHeight: 0.95,
           color: T.ink, letterSpacing: -0.8,
-        }}>4 days,<br/>0 chill</h1>
+        }}>Mercredi<br/>→ Dimanche</h1>
       </div>
 
       {/* day chips */}
-      <div style={{
-        padding: '4px 20px 16px', display: 'flex', gap: 8, overflowX: 'auto',
-      }}>
+      <div style={{ padding: '4px 20px 16px', display: 'flex', gap: 8, overflowX: 'auto' }}>
         {DAYS.map((dd, i) => {
-          const st = dayStatus(dd.dateISO);
           const selected = i === idx;
-          const chipBg =
-            selected ? T.primary :
-            st === 'today' ? T.bg :
-            T.surface;
-          const chipBorder =
-            selected ? T.primary :
-            st === 'today' ? T.primary :
-            T.border;
-          const chipFg = selected ? T.primaryInk : T.ink;
           return (
             <button
               key={dd.id}
               onClick={() => setIdx(i)}
               style={{
                 flex: '0 0 auto', padding: '10px 14px', borderRadius: 999,
-                border: `1.5px solid ${chipBorder}`,
-                background: chipBg, color: chipFg,
+                border: `1.5px solid ${selected ? T.primary : T.border}`,
+                background: selected ? T.primary : T.surface,
+                color: selected ? T.primaryInk : T.ink,
                 fontFamily: T.body, fontWeight: 600, fontSize: 13,
-                cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all .15s',
-                opacity: st === 'done' && !selected ? 0.5 : 1,
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                textDecoration: st === 'done' && !selected ? 'line-through' : 'none',
+                cursor: 'pointer', whiteSpace: 'nowrap',
               }}
-            >
-              <span style={{ opacity: 0.7 }}>{dd.short}</span>
-              <span>{dd.theme}</span>
-              {st === 'today' && !selected && (
-                <span style={{
-                  width: 6, height: 6, borderRadius: '50%', background: T.primary,
-                }}></span>
-              )}
-            </button>
+            >{dd.label}</button>
           );
         })}
       </div>
 
       {/* hero card */}
       <div style={{ padding: '0 20px' }}>
-        <Card style={{
-          padding: 18, background: T.ink, border: `1px solid ${T.ink}`, color: T.bg,
-          opacity: isDone ? 0.7 : 1,
-        }}>
+        <Card style={{ padding: 18, background: T.ink, border: `1px solid ${T.ink}`, color: T.bg }}>
           <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
-            marginBottom: 8,
-          }}>
-            <div style={{
-              fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
-              color: 'rgba(241,232,210,0.6)', fontWeight: 700, fontFamily: T.body,
-            }}>{d.date}</div>
-            <Pill bg={statusPill.bg} fg={statusPill.fg} style={{
-              fontSize: 10, padding: '4px 8px',
-            }}>{statusPill.text}</Pill>
-          </div>
+            fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
+            color: 'rgba(241,232,210,0.6)', fontWeight: 700, fontFamily: T.body, marginBottom: 8,
+          }}>{d.label}</div>
           <div style={{
-            fontFamily: T.display, fontSize: 32,
-            color: T.bg, lineHeight: 1, letterSpacing: -0.5,
+            fontFamily: T.display, fontSize: 30, color: T.bg, lineHeight: 1.1, letterSpacing: -0.5,
           }}>{d.theme}</div>
-          <div style={{
-            marginTop: 10, fontSize: 14, color: 'rgba(241,232,210,0.75)', fontFamily: T.body,
-          }}>{d.badge}</div>
         </Card>
       </div>
 
-      {/* timed program */}
-      <div style={{ padding: '20px 20px 0' }}>
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10,
-        }}>
-          <span style={{ fontSize: 20 }}>🗓️</span>
-          <span style={{ fontFamily: T.display, fontSize: 22, color: T.ink }}>The day</span>
-        </div>
-        <Card style={{ padding: '4px 14px' }}>
-          {d.program.map((ev, i) => (
-            <ProgramRow key={i} ev={ev} dark={false} last={i === d.program.length - 1} />
-          ))}
-        </Card>
-      </div>
-
-      {/* checklists by block */}
-      <div style={{ padding: '20px 20px 0' }}>
-        <div style={{
-          fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
-          color: T.inkSoft, fontWeight: 700, fontFamily: T.body, marginBottom: 10,
-          paddingLeft: 4,
-        }}>checklists</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {d.blocks.map((b, bi) => (
-            <div key={b.time}>
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6,
-              }}>
-                <span style={{ fontSize: 20 }}>{b.emoji}</span>
-                <span style={{
-                  fontFamily: T.display, fontSize: 22, color: T.ink,
-                }}>{b.time}</span>
+      {/* dress code */}
+      {(d.dressJour || d.dressSoir) && (
+        <div style={{ padding: '20px 20px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <span style={{ fontSize: 20 }}>👗</span>
+            <span style={{ fontFamily: T.display, fontSize: 22, color: T.ink }}>Dress code</span>
+          </div>
+          <Card style={{ padding: 16 }}>
+            {d.dressJour && (
+              <div style={{ marginBottom: d.dressSoir ? 10 : 0 }}>
+                <div style={{
+                  fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase',
+                  color: T.primary, fontWeight: 700, fontFamily: T.body, marginBottom: 4,
+                }}>Jour</div>
+                <div style={{ fontSize: 14, color: T.ink, fontFamily: T.body, lineHeight: 1.5 }}>{d.dressJour}</div>
               </div>
-              <Card style={{ padding: '4px 14px' }}>
-                {b.items.map((it, ii) => (
-                  <CheckRow key={ii} id={`${d.id}-${bi}-${ii}`}>{it}</CheckRow>
-                ))}
-              </Card>
-            </div>
-          ))}
+            )}
+            {d.dressSoir && (
+              <div>
+                <div style={{
+                  fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase',
+                  color: T.primary, fontWeight: 700, fontFamily: T.body, marginBottom: 4,
+                }}>Soir</div>
+                <div style={{ fontSize: 14, color: T.ink, fontFamily: T.body, lineHeight: 1.5 }}>{d.dressSoir}</div>
+              </div>
+            )}
+          </Card>
         </div>
-      </div>
+      )}
+
+      {/* meals */}
+      {d.meals && (
+        <div style={{ padding: '20px 20px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <span style={{ fontSize: 20 }}>🍽️</span>
+            <span style={{ fontFamily: T.display, fontSize: 22, color: T.ink }}>Repas</span>
+          </div>
+          <Card style={{ padding: 16 }}>
+            <MealBlock label="Matin" items={d.meals.matin} />
+            <MealBlock label="Midi" items={d.meals.midi} />
+            <MealBlock label="Soir" items={d.meals.soir} />
+            <MealBlock label="Autres idées" items={d.meals.idees} />
+          </Card>
+        </div>
+      )}
+
+      {/* checklist items */}
+      {d.items && d.items.length > 0 && (
+        <div style={{ padding: '20px 20px 0' }}>
+          <div style={{
+            fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
+            color: T.inkSoft, fontWeight: 700, fontFamily: T.body, marginBottom: 10, paddingLeft: 4,
+          }}>à faire</div>
+          <Card style={{ padding: '4px 14px' }}>
+            {d.items.map((it, i) => (
+              <CheckRow key={i} id={`${d.id}-${i}`}>{it}</CheckRow>
+            ))}
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────
-// ROOMS
+// CHAMBRES (Rooms)
 // ─────────────────────────────────────────────────────────────
-function RoomsTab() {
+function ChambresTab() {
   return (
     <div style={{ paddingBottom: 28 }}>
       <div style={{ padding: '24px 20px 8px' }}>
         <div style={{
           fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
           color: T.inkSoft, fontWeight: 700, fontFamily: T.body, marginBottom: 6,
-        }}>where you're sleeping</div>
+        }}>où on dort</div>
         <h1 style={{
           margin: 0, fontFamily: T.display, fontSize: 44, lineHeight: 0.95,
           color: T.ink, letterSpacing: -0.8,
-        }}>7 rooms,<br/>18 of us</h1>
+        }}>8 chambres</h1>
       </div>
 
-      {[1, 2].map(fl => (
-        <div key={fl} style={{ marginTop: 20 }}>
-          <div style={{
-            padding: '0 20px', display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10,
-          }}>
-            <span style={{ fontFamily: T.display, fontSize: 24, color: T.ink }}>
-              {fl === 1 ? "1st" : "2nd"} floor
-            </span>
-            <span style={{ flex: 1, height: 1, background: T.border }}></span>
-            <span style={{
-              fontSize: 11, color: T.inkSoft, fontFamily: T.body,
-              fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase',
-            }}>{ROOMS.filter(r => r.floor === fl).length} rooms</span>
-          </div>
-
-          <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {ROOMS.filter(r => r.floor === fl).map(r => (
-              <Card key={r.n} style={{ padding: 14 }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-                  <div style={{
-                    width: 54, height: 54, borderRadius: 14, flex: '0 0 auto',
-                    background: T.bg, border: `1.5px solid ${T.primary}`,
-                    color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: T.display, fontSize: 24,
-                  }}>{r.n}</div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      fontFamily: T.display, fontSize: 20, color: T.ink, lineHeight: 1.1,
-                    }}>Bedroom {r.n}</div>
-                    <div style={{
-                      marginTop: 3, fontSize: 13, color: T.inkSoft, fontFamily: T.body,
-                    }}>{r.bed} · sleeps {r.ppl.length}</div>
-                  </div>
-                </div>
-                <div style={{
-                  marginTop: 12, paddingTop: 12, borderTop: `1px solid ${T.border}`,
-                  display: 'flex', flexWrap: 'wrap', gap: 8,
+      <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {ROOMS.map(r => (
+          <Card key={r.n} style={{ padding: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+              <div style={{
+                width: 54, height: 54, borderRadius: 14, flex: '0 0 auto',
+                background: T.bg, border: `1.5px solid ${T.primary}`,
+                color: T.primary, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: T.display, fontSize: 24,
+              }}>{r.n}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: T.display, fontSize: 20, color: T.ink, lineHeight: 1.1 }}>Chambre {r.n}</div>
+                <div style={{ marginTop: 3, fontSize: 13, color: T.inkSoft, fontFamily: T.body }}>{r.ppl.length} personne(s)</div>
+              </div>
+            </div>
+            <div style={{
+              marginTop: 12, paddingTop: 12, borderTop: `1px solid ${T.border}`,
+              display: 'flex', flexWrap: 'wrap', gap: 8,
+            }}>
+              {r.ppl.map(p => (
+                <span key={p} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  padding: '5px 12px 5px 5px', borderRadius: 999,
+                  background: T.bg, border: `1px solid ${T.border}`,
                 }}>
-                  {r.ppl.map(p => (
-                    <span key={p} style={{
-                      display: 'inline-flex', alignItems: 'center', gap: 8,
-                      padding: '5px 12px 5px 5px', borderRadius: 999,
-                      background: T.bg, border: `1px solid ${T.border}`,
-                    }}>
-                      <Avatar name={p} size={22} />
-                      <span style={{
-                        fontSize: 13, fontWeight: 600, color: T.ink, fontFamily: T.body,
-                      }}>{p}</span>
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            ))}
+                  <Avatar name={p} size={22} />
+                  <span style={{ fontSize: 13, fontWeight: 600, color: T.ink, fontFamily: T.body }}>{p}</span>
+                </span>
+              ))}
+            </div>
+          </Card>
+        ))}
+
+        {/* extra bed */}
+        <Card style={{ padding: 14, border: `1px dashed ${T.primary}80` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{
+              width: 54, height: 54, borderRadius: 14, flex: '0 0 auto',
+              background: T.bg, color: T.primary, display: 'flex',
+              alignItems: 'center', justifyContent: 'center', fontSize: 22,
+            }}>🛏️</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: T.display, fontSize: 18, color: T.ink }}>{EXTRA_BED.label}</div>
+              <div style={{ marginTop: 4, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Avatar name={EXTRA_BED.person} size={22} />
+                <span style={{ fontSize: 13, fontWeight: 600, color: T.ink, fontFamily: T.body }}>{EXTRA_BED.person}</span>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        </Card>
+      </div>
 
       <div style={{ marginTop: 28 }}>
-        <SectionTitle kicker="the whole crew">all 18 of us</SectionTitle>
+        <SectionTitle kicker="tout le monde">{ROSTER.length} confirmés</SectionTitle>
         <div style={{ padding: '0 20px' }}>
           <Card style={{ padding: 14 }}>
-            <div style={{
-              display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', columnGap: 12, rowGap: 10,
-            }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', columnGap: 12, rowGap: 10 }}>
               {ROSTER.map((p, i) => (
                 <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <span style={{
@@ -929,9 +587,7 @@ function RoomsTab() {
                     fontWeight: 700, textAlign: 'right',
                   }}>{String(i + 1).padStart(2, '0')}</span>
                   <Avatar name={p} size={28} />
-                  <span style={{
-                    fontSize: 14, color: T.ink, fontFamily: T.body, fontWeight: 500,
-                  }}>{p}</span>
+                  <span style={{ fontSize: 14, color: T.ink, fontFamily: T.body, fontWeight: 500 }}>{p}</span>
                 </div>
               ))}
             </div>
@@ -943,11 +599,10 @@ function RoomsTab() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// LISTS
+// LISTES
 // ─────────────────────────────────────────────────────────────
-function ListsTab() {
-  const [open, setOpen] = useLocal('nepo:list-open', 'groceries');
-  const groups = Object.keys(GROCERIES);
+function ListesTab() {
+  const [open, setOpen] = useLocal('vac:list-open', 'pack');
 
   const Section = ({ id, title, kicker, children }) => {
     const isOpen = open === id;
@@ -991,165 +646,41 @@ function ListsTab() {
         <div style={{
           fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase',
           color: T.inkSoft, fontWeight: 700, fontFamily: T.body, marginBottom: 6,
-        }}>everything we need</div>
+        }}>tout ce qu'il faut savoir</div>
         <h1 style={{
           margin: 0, fontFamily: T.display, fontSize: 44, lineHeight: 0.95,
           color: T.ink, letterSpacing: -0.8,
-        }}>the lists</h1>
+        }}>les listes</h1>
       </div>
 
       <div style={{ padding: '12px 20px 0', display: 'flex', flexDirection: 'column', gap: 10 }}>
 
-        <Section id="groceries" kicker="🛒 shopping" title="Grocery list">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 6 }}>
-            {groups.map(g => (
-              <div key={g}>
-                <div style={{
-                  fontFamily: T.body, fontSize: 12, fontWeight: 700,
-                  letterSpacing: 1.2, textTransform: 'uppercase',
-                  color: T.primary, marginBottom: 4,
-                }}>{g}</div>
-                <div>
-                  {GROCERIES[g].map((it, i) => (
-                    <CheckRow key={`${g}-${i}`} id={`gro-${g}-${i}`}>{it}</CheckRow>
-                  ))}
-                </div>
-              </div>
+        <Section id="pack" kicker="🎒 à ne pas oublier" title="Ce qu'il faut apporter">
+          <div style={{ marginTop: 6 }}>
+            {PACKING_LIST.map((it, i) => (
+              <CheckRow key={i} id={`pack-${i}`}>{it}</CheckRow>
             ))}
           </div>
         </Section>
 
-        <Section id="cars" kicker="🚗 getting there" title="Car arrangements">
+        <Section id="notes" kicker="ℹ️ à retenir" title="Programme & cuisine">
           <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {CARS.map(c => (
-              <div key={c.driver} style={{
-                padding: 12, borderRadius: 12,
-                background: T.bg, border: `1px solid ${T.border}`,
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
-                  <span style={{ fontFamily: T.body, fontWeight: 700, fontSize: 14, color: T.ink }}>{c.driver}'s car</span>
-                  <span style={{ fontSize: 12, color: T.inkSoft, fontFamily: T.body, fontWeight: 600 }}>{c.time}</span>
-                </div>
-                <div style={{ marginTop: 4, fontSize: 12, color: T.inkSoft, fontFamily: T.body }}>
-                  {c.stop} → {c.to} · {c.meet}
-                </div>
-                <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {c.ppl.map(p => (
-                    <span key={p} style={{
-                      display: 'inline-flex', alignItems: 'center', gap: 8,
-                      padding: '5px 12px 5px 5px', borderRadius: 999,
-                      background: T.surface, border: `1px solid ${T.border}`,
-                    }}>
-                      <Avatar name={p} size={20} />
-                      <span style={{ fontSize: 12, fontWeight: 600, color: T.ink, fontFamily: T.body }}>{p}</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        <Section id="mealduty" kicker="🍽️ kitchen crew" title="Meal duty">
-          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 0 }}>
-            {MEAL_DUTY.map((m, i) => (
-              <div key={m.day} style={{
-                padding: '10px 0',
-                borderBottom: i < MEAL_DUTY.length - 1 ? `1px solid ${T.border}` : 'none',
-              }}>
-                <div style={{
-                  fontSize: 11, letterSpacing: 1, textTransform: 'uppercase',
-                  color: T.inkSoft, fontWeight: 700, fontFamily: T.body,
-                }}>{m.day}</div>
-                <div style={{
-                  fontFamily: T.body, fontWeight: 600, fontSize: 14, color: T.ink, marginTop: 2,
-                }}>{m.crew}</div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        <Section id="activities" kicker="🎲 the agenda" title="Activity ideas">
-          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {ACTIVITY_IDEAS.map((a, i) => (
-              <div key={a.name} style={{
+            {NOTES.map(n => (
+              <div key={n.title} style={{
                 display: 'flex', alignItems: 'center', gap: 12,
                 padding: '10px 12px', borderRadius: 12,
                 background: T.bg, border: `1px solid ${T.border}`,
               }}>
-                <div style={{
-                  width: 30, height: 30, borderRadius: 10, flex: '0 0 auto',
-                  background: T.primary, color: T.primaryInk,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: T.display, fontSize: 14,
-                }}>{i + 1}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: T.body, fontWeight: 600, fontSize: 14, color: T.ink }}>{a.name}</div>
-                  <div style={{ fontSize: 12, color: T.inkSoft, fontFamily: T.body }}>{a.note}</div>
+                <span style={{ fontSize: 20 }}>{n.emoji}</span>
+                <div>
+                  <div style={{ fontFamily: T.body, fontWeight: 600, fontSize: 14, color: T.ink }}>{n.title}</div>
+                  <div style={{ fontSize: 12, color: T.inkSoft, fontFamily: T.body }}>{n.text}</div>
                 </div>
               </div>
             ))}
           </div>
         </Section>
 
-        <Section id="rules" kicker="✋ the law" title="House rules">
-          <div style={{ marginTop: 6 }}>
-            {HOUSE_RULES.map((r, i) => (
-              <div key={i} style={{
-                padding: '10px 0',
-                borderBottom: i < HOUSE_RULES.length - 1 ? `1px solid ${T.border}` : 'none',
-                display: 'flex', gap: 12, alignItems: 'flex-start',
-              }}>
-                <span style={{
-                  fontFamily: T.display, fontSize: 14, color: T.primary, lineHeight: 1.3, flex: '0 0 20px',
-                }}>{String(i + 1).padStart(2, '0')}</span>
-                <span style={{
-                  flex: 1, fontSize: 14, color: T.ink, fontFamily: T.body, lineHeight: 1.4,
-                }}>{r}</span>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        <Section id="emergency" kicker="🚨 just in case" title="Emergency info">
-          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {EMERGENCY.map(([ic, lbl, val]) => (
-              <div key={lbl} style={{
-                display: 'flex', alignItems: 'center', gap: 12,
-                padding: '10px 0', borderBottom: `1px solid ${T.border}`,
-              }}>
-                <span style={{ fontSize: 20, width: 28, textAlign: 'center' }}>{ic}</span>
-                <div style={{ flex: 1 }}>
-                  <div style={{
-                    fontSize: 11, letterSpacing: 1, textTransform: 'uppercase',
-                    color: T.inkSoft, fontWeight: 700, fontFamily: T.body,
-                  }}>{lbl}</div>
-                  <div style={{
-                    fontFamily: T.body, fontWeight: 600, fontSize: 15, color: T.ink, marginTop: 1,
-                  }}>{val}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        <Section id="pack" kicker="🎒 don't forget" title="What to bring">
-          <div style={{
-            marginTop: 6, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8,
-          }}>
-            {[
-              "Swimsuit", "Towel", "Bug spray", "Sunscreen",
-              "Hiking shoes", "Flip flops", "Warm layer", "Sleep stuff",
-              "Phone charger", "Toiletries", "Vibes 💅", "Patience 😅",
-            ].map((it, i) => (
-              <div key={i} style={{
-                padding: '10px 12px', borderRadius: 10,
-                background: T.bg, border: `1px solid ${T.border}`,
-                fontSize: 13, fontFamily: T.body, color: T.ink, fontWeight: 500,
-              }}>{it}</div>
-            ))}
-          </div>
-        </Section>
       </div>
     </div>
   );
@@ -1189,15 +720,15 @@ function ListsIcon({ on }) {
 }
 
 const TABS = [
-  { id: 'home',  label: 'Home',  Icon: HomeIcon },
-  { id: 'days',  label: 'Days',  Icon: DaysIcon },
-  { id: 'rooms', label: 'Rooms', Icon: RoomsIcon },
-  { id: 'lists', label: 'Lists', Icon: ListsIcon },
+  { id: 'accueil',  label: 'Accueil',  Icon: HomeIcon },
+  { id: 'jours',    label: 'Jours',    Icon: DaysIcon },
+  { id: 'chambres', label: 'Chambres', Icon: RoomsIcon },
+  { id: 'listes',   label: 'Listes',   Icon: ListsIcon },
 ];
 
 function TabBar({ active, onChange }) {
   return (
-    <nav className="nepo-tabbar" style={{
+    <nav className="vac-tabbar" style={{
       position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
       paddingLeft: 4, paddingRight: 4, paddingTop: 6,
       paddingBottom: `calc(env(safe-area-inset-bottom, 0px) + 6px)`,
@@ -1241,11 +772,11 @@ function TabBar({ active, onChange }) {
 // App shell
 // ─────────────────────────────────────────────────────────────
 function App() {
-  const [tab, setTab] = useLocal('nepo:tab', 'home');
+  const [tab, setTab] = useLocal('vac:tab', 'accueil');
   React.useEffect(() => { window.scrollTo({ top: 0 }); }, [tab]);
 
-  const tabMap = { home: HomeTab, days: DaysTab, rooms: RoomsTab, lists: ListsTab };
-  const Body = tabMap[tab] || HomeTab;
+  const tabMap = { accueil: AccueilTab, jours: JoursTab, chambres: ChambresTab, listes: ListesTab };
+  const Body = tabMap[tab] || AccueilTab;
 
   return (
     <div style={{
